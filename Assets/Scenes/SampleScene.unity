@@ -1536,44 +1536,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab5273f4a5c1728428256d8c0345f629, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data:
-    useCurves: 0
-  dd:
-    source: {fileID: 0}
-    missilesType:
-      useRandomCurve: 0
-      randomMinX: 0
-      randomMaxX: 0
-      randomMinY: 0
-      randomMaxY: 0
-      yOffset:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      xOffset:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      speedInterpolator:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-    currentTime: 0
-    currentSpeed: 0
-    allCurvesPower: 0
-    searchRadius: 0
-    rotateOffset: 0
-    distanceToCompleted: 0
-    endPosition: {x: 0, y: 0, z: 0}
-    startPosition: {x: 0, y: 0, z: 0}
-    pursue: 0
-    rotateToTarget: 0
+  patron: {fileID: 0}
   movable: {fileID: 0}
   target: {fileID: 0}
   tj: {fileID: 0}
@@ -3272,125 +3235,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab5273f4a5c1728428256d8c0345f629, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data:
-    useCurves: 0
-  dd:
-    source: {fileID: 0}
-    missilesType:
-      useRandomCurve: 1
-      randomMinX: 0
-      randomMaxX: 0
-      randomMinY: 1
-      randomMaxY: 1
-      yOffset:
-        serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: 0
-          inSlope: 0.059842706
-          outSlope: 0.059842706
-          tangentMode: 34
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0.33333334
-        - serializedVersion: 3
-          time: 0.16864777
-          value: 0.010092339
-          inSlope: 0.02385152
-          outSlope: 0.02385152
-          tangentMode: 34
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
-        - serializedVersion: 3
-          time: 1
-          value: 0
-          inSlope: -0.012139666
-          outSlope: -0.012139666
-          tangentMode: 34
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      xOffset:
-        serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: 0
-          inSlope: 2.040822
-          outSlope: 2.040822
-          tangentMode: 34
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0.33333334
-        - serializedVersion: 3
-          time: 0.1971496
-          value: 0.40234727
-          inSlope: 0.0037102834
-          outSlope: 0.0037102834
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.17535554
-        - serializedVersion: 3
-          time: 0.7010363
-          value: -0.20005086
-          inSlope: -0.027455602
-          outSlope: -0.027455602
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.39770672
-        - serializedVersion: 3
-          time: 1
-          value: 0
-          inSlope: 0.6691476
-          outSlope: 0.6691476
-          tangentMode: 34
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      speedInterpolator:
-        serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: 0
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 1
-          value: 1
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-    currentTime: 0
-    currentSpeed: 0.01
-    allCurvesPower: 20
-    searchRadius: 0
-    rotateOffset: 0
-    distanceToCompleted: 0.01
-    endPosition: {x: 0, y: 0, z: 0}
-    startPosition: {x: 0, y: 0, z: 0}
-    pursue: 0
-    rotateToTarget: 1
+  patron: {fileID: 11400000, guid: 86f2be0424a26fc42a3237eb3ea1a5a2, type: 2}
   movable: {fileID: 1505819359}
   target: {fileID: 932490705}
   tj: {fileID: 581627498}
@@ -4269,6 +4114,7 @@ MonoBehaviour:
   allocator: 4
   m_Targets: []
   m_Patrons: []
+  m_OnReached: []
   m_DynamicData: []
   isCreated: 0
 --- !u!1 &1190180424
@@ -8969,6 +8815,7 @@ MonoBehaviour:
   allocator: 4
   m_Targets: []
   m_Patrons: []
+  m_OnReached: []
   m_DynamicData: []
   isCreated: 0
 --- !u!1 &1966464667

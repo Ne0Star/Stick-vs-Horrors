@@ -4,6 +4,7 @@ using Unity.Burst;
 using Unity.Collections;
 using Unity.Jobs;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Jobs;
 
 
@@ -19,7 +20,12 @@ public class TrajectoryData
 [System.Serializable]
 public class DynamicData
 {
+    /// <summary>
+    /// Если патрон вложенный, то источником будет его родитель
+    /// </summary>
     public Transform source;
+
+
     public MissilesType missilesType;
 
     /// <summary>
@@ -34,10 +40,6 @@ public class DynamicData
     /// Множитель смещения траектории
     /// </summary>
     public float allCurvesPower;
-    /// <summary>
-    /// В этом радиусе будет искаться новый враг если текущий враг умрёт
-    /// </summary>
-    public float searchRadius;
     /// <summary>
     /// Вращение будет происходить с этим отклонением
     /// </summary>
@@ -102,7 +104,7 @@ public class TrajectoryDealer : MonoBehaviour
         //maxPatrons = transform.childCount * oneDealerPatrons;
         m_Targets = new Transform[maxPatrons];
         m_Patrons = new Transform[maxPatrons];
-        m_OnReached = new System.Action<Transform, Transform>[maxPatrons];
+        m_OnReached = new UnityEvent<Transform, Transform>[maxPatrons];
         m_DynamicData = new DynamicData[maxPatrons];
     }
 
@@ -111,7 +113,7 @@ public class TrajectoryDealer : MonoBehaviour
     /// <summary>
     /// Патрон, цель, источник
     /// </summary>
-    public System.Action<Transform, Transform>[] m_OnReached;
+    public UnityEvent<Transform, Transform>[] m_OnReached;
     public DynamicData[] m_DynamicData;
     public NativeArray<Data> tempData;
 
@@ -148,7 +150,7 @@ public class TrajectoryDealer : MonoBehaviour
 
     }
 
-    public void CreateAllList(DynamicData d, Transform patron, Transform target, System.Action<Transform, Transform> onComplete)
+    public void CreateAllList(DynamicData d, Transform patron, Transform target, UnityEvent<Transform, Transform> onComplete)
     {
         if (!AllowBuild()) return;
         for (int i = 0; i < m_Patrons.Length; i++)
@@ -244,7 +246,7 @@ public class TrajectoryDealer : MonoBehaviour
         else return false;
     }
 
-    public void CreatePatron(DynamicData data, Transform patron, Transform target, System.Action<Transform, Transform> onComplete)
+    public void CreatePatron(DynamicData data, Transform patron, Transform target, UnityEvent<Transform, Transform> onComplete)
     {
         if (!AllowBuild()) return;
         if (data.missilesType.UseRandomCurve)
