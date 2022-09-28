@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Terrain
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - Balls
+  - Patrons
+  - Enemu
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Terrain
+    uniqueID: 3378328623
+    locked: 0
+  - name: Shadow
+    uniqueID: 2005027937
+    locked: 0
+  - name: Entities
+    uniqueID: 3991446791
+    locked: 0
+  - name: Player
+    uniqueID: 2679973645
+    locked: 0
+  - name: VFX
+    uniqueID: 845861915
+    locked: 0
