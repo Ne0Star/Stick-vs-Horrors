@@ -45,15 +45,21 @@ TagManager:
   - name: Terrain
     uniqueID: 3378328623
     locked: 0
+  - name: BG
+    uniqueID: 573510601
+    locked: 0
   - name: Shadow
     uniqueID: 2005027937
     locked: 0
   - name: Entities
     uniqueID: 3991446791
     locked: 0
+  - name: VFX
+    uniqueID: 845861915
+    locked: 0
   - name: Player
     uniqueID: 2679973645
     locked: 0
-  - name: VFX
-    uniqueID: 845861915
+  - name: Location
+    uniqueID: 1145052581
     locked: 0

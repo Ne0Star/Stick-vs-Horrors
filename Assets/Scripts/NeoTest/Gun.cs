@@ -12,6 +12,7 @@ public class Gun : MonoBehaviour
     [SerializeField] private Transform target;
     [SerializeField] private GunController gunController;
     [SerializeField] private float distance;
+    [SerializeField] private SpriteRenderer render;
     private void Start()
     {
         if (!pool)
@@ -44,7 +45,7 @@ Vector2 dir = transform.position + (transform.position - target.position) * dist
                 created++;
                 patron.Shadow.SetY(heightTarget.position.y);
                 patron.SetMaxY(heightTarget.position.y + 0.5f);
-                
+                patron.SetOrder("Player", render.sortingOrder);
                 DynamicData dd = patronTrajectory.GetMoveData(patron.transform, dir, transform);
                 gunController.CreateDrag();
                 patron.AnimateExplose(() =>

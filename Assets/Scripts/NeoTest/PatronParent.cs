@@ -5,7 +5,7 @@ using UnityEngine;
 public class PatronParent : MonoBehaviour
 {
     [SerializeField] private Patron patron;
-
+    
 
     private bool block = false;
 

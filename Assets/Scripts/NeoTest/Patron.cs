@@ -27,6 +27,14 @@ public class Patron : MonoBehaviour
     [System.Serializable]
     public class OnPatronKill : UnityEngine.Events.UnityEvent { }
 
+
+    [SerializeField] private SpriteRenderer patronRenderer;
+    public void SetOrder(string name, int order)
+    {
+        patronRenderer.sortingLayerName = name;
+        patronRenderer.sortingOrder = order;
+    }
+
     [SerializeField] private TweenScaleData exploseIn, exploseOut;
 
     [SerializeField] private float exploseDistance, explosePower;
