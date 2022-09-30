@@ -86,19 +86,6 @@ public static class GameUtils
         whom.rotation = Quaternion.Lerp(whom.rotation, total, time);
         if (GameUtils.RoundToValue(Vector2.Distance(new Vector2(total.z, 0), new Vector2(whom.rotation.z, 0)), 0.05f) <= distanceToComplete) onComplete();
     }
-    /// <summary>
-    /// whom поворачивается в сторону where, с оффестом offset
-    /// </summary>
-    /// <param name="whom"></param>
-    /// <param name="where"></param>
-    /// <param name="offset"></param>
-    public static void LookAt2D(Transform whom, Transform where, float offset)
-    {
-        float angle = Mathf.Atan2(where.transform.position.y - whom.transform.position.y, where.transform.position.x - whom.transform.position.x) * Mathf.Rad2Deg - offset;
-        Quaternion total = Quaternion.Euler(whom.transform.rotation.eulerAngles.x, whom.transform.rotation.eulerAngles.y, angle);
-
-        whom.transform.rotation = total;
-    }
 
     /// <summary>
     /// whom поворачивается в сторону where, с оффестом offset
@@ -164,19 +151,47 @@ public static class GameUtils
 
         whom.rotation = total;
     }
+    ///// <summary>
+    ///// whom поворачивается в сторону where, с оффестом offset
+    ///// </summary>
+    ///// <param name="whom"></param>
+    ///// <param name="where"></param>
+    ///// <param name="offset"></param>
+    //public static void LookAt2D(Transform whom, Vector2 where, float offset)
+    //{
+    //    float angle = Mathf.Atan2(where.y - whom.position.y, where.x - whom.position.x) * Mathf.Rad2Deg;
+    //    Quaternion total = Quaternion.Euler(whom.rotation.eulerAngles.x, whom.rotation.eulerAngles.y, angle + offset);
+
+    //    whom.rotation = total;
+    //}
+
     /// <summary>
     /// whom поворачивается в сторону where, с оффестом offset
     /// </summary>
     /// <param name="whom"></param>
     /// <param name="where"></param>
     /// <param name="offset"></param>
-    public static void LookAt2D(Transform whom, Vector2 where, float offset)
+    public static Quaternion LookAt2D(Transform whom, Vector2 where, float offset)
     {
         float angle = Mathf.Atan2(where.y - whom.position.y, where.x - whom.position.x) * Mathf.Rad2Deg;
         Quaternion total = Quaternion.Euler(whom.rotation.eulerAngles.x, whom.rotation.eulerAngles.y, angle + offset);
 
-        whom.rotation = total;
+        return total;
     }
+
+    /// <summary>
+    /// whom поворачивается в сторону where, с оффестом offset
+    /// </summary>
+    /// <param name="whom"></param>
+    /// <param name="where"></param>
+    /// <param name="offset"></param>
+    public static Quaternion LookAt2D(Transform whom, Transform where, float offset)
+    {
+        float angle = Mathf.Atan2(where.transform.position.y - whom.transform.position.y, where.transform.position.x - whom.transform.position.x) * Mathf.Rad2Deg - offset;
+        Quaternion total = Quaternion.Euler(whom.transform.rotation.eulerAngles.x, whom.transform.rotation.eulerAngles.y, angle);
+        return total;
+    }
+
     /// <summary>
     /// whom поворачивается в сторону where, с оффестом offset
     /// </summary>

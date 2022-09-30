@@ -20,11 +20,14 @@ public class TrajectoryData
 [System.Serializable]
 public class DynamicData
 {
+
+
+    public Transform target, patron;
+
     /// <summary>
     /// Если патрон вложенный, то источником будет его родитель
     /// </summary>
     public Transform source;
-
 
     public MissilesType missilesType;
 
@@ -58,8 +61,8 @@ public class TrajectoryDealer : MonoBehaviour
     public int oneDealerPatrons;
     [SerializeField]
     private int maxPatrons;
-    [SerializeField]
-    private int currentPatrons;
+    [SerializeField] private int currentPatrons;
+
     public bool UseJob;
     public Allocator allocator;
     public JobHandle handles;
@@ -68,7 +71,7 @@ public class TrajectoryDealer : MonoBehaviour
 
     public bool AllowBuild()
     {
-        if (currentPatrons == maxPatrons) return false; else return true;
+        if (tempBlock || currentPatrons >= maxPatrons) return false; else return true;
     }
     private void OnEnable()
     {
@@ -82,6 +85,7 @@ public class TrajectoryDealer : MonoBehaviour
     {
         DisposeAllTemp();
     }
+
     /// <summary>
     /// Эта структура отправляется в задачу
     /// </summary>
@@ -98,7 +102,7 @@ public class TrajectoryDealer : MonoBehaviour
         public Vector3 startPosition;
 
     }
-    // будет ли преследовать, если нет то вместо его трансформа создать пустышку на его месте и сделать её целью
+
     void Awake()
     {
         //maxPatrons = transform.childCount * oneDealerPatrons;
@@ -131,15 +135,16 @@ public class TrajectoryDealer : MonoBehaviour
         tempData = new NativeArray<Data>(m_Patrons.Length, allocator);
         isCreated = true;
     }
+    public int created = 0;
+    public int reached = 0;
     public void RemoveAllList(int i, bool andDispose)
     {
         //Debug.Log(m_Patrons[i] + " " + i);
-        //currentPatrons--;
+        currentPatrons--;
 
-        if (m_DynamicData[i].source)
-        {
-            m_OnReached[i].Invoke(m_Patrons[i], m_Targets[i]);
-        }
+        reached++;
+        m_OnReached[i]?.Invoke(m_Patrons[i], m_Targets[i]);
+
         m_OnReached[i] = null;
         m_DynamicData[i] = new DynamicData();
         m_Targets[i] = null;
@@ -150,67 +155,69 @@ public class TrajectoryDealer : MonoBehaviour
 
     }
 
-    public void CreateAllList(DynamicData d, Transform patron, Transform target, UnityEvent<Transform, Transform> onComplete)
+    private void CreateAllList(DynamicData d, Transform patron, Transform target, UnityEvent<Transform, Transform> onComplete)
     {
-        if (!AllowBuild()) return;
+        //if (!AllowBuild()) return;
         for (int i = 0; i < m_Patrons.Length; i++)
         {
             if (!m_Patrons[i])
             {
-                StartCoroutine(PatronLife(i));
+                //StartCoroutine(PatronLife(i));
                 m_OnReached[i] = onComplete;
                 m_DynamicData[i] = d;
                 m_Patrons[i] = patron;
                 m_Targets[i] = target;
-                currentPatrons++;
+                //currentPatrons++;
                 return;
             }
         }
         //
     }
 
-    private IEnumerator PatronLife(int i)
-    {
-        yield return new WaitUntil(() => (!m_Patrons[i] || !m_Patrons[i].gameObject.activeInHierarchy));
-        currentPatrons--;
-    }
+    //private IEnumerator PatronLife(int i)
+    //{
+    //    yield return new WaitUntil(() => (!m_Patrons[i] || !m_Patrons[i].gameObject.activeInHierarchy));
+    //    currentPatrons--;
+    //}
 
-    private void FixedUpdate()
+    private void LateUpdate()
     {
         //if(currentPatrons == maxPatrons) currentPatrons = 0;
+
+        if (!isCreated)
+        {
+            return;
+        }
         if (UseJob)
         {
-            if (!isCreated)
-            {
-                return;
-            }
             for (int i = 0; i < m_DynamicData.Length; i++)
             {
-                if (m_Patrons[i] != null && m_Patrons[i].gameObject.activeInHierarchy)
+                DynamicData dd = m_DynamicData[i];
+                if (m_Patrons[i] != null)
                 {
-                    DynamicData dd = m_DynamicData[i];
                     Data td = tempData[i];
-
                     // check last data
-                    if (Vector2.Distance(m_Patrons[i].position, m_DynamicData[i].endPosition) <= dd.distanceToCompleted || !(m_Patrons[i] || m_Patrons[i].gameObject.activeInHierarchy))
+                    if (!m_Patrons[i].gameObject.activeInHierarchy || Vector2.Distance(m_Patrons[i].position, dd.endPosition) <= dd.distanceToCompleted)
                     {
                         RemoveAllList(i, true);
                         CreateAllTemp();
                         return;
                     }
                     // set/update dynamic
-                    dd.currentTime += dd.currentSpeed;
+                    dd.currentTime += 1f / Vector2.Distance(dd.endPosition, dd.startPosition) * dd.currentSpeed;
                     // set temp
                     td.rotateOffset = dd.rotateOffset;
                     td.rotateToTarget = dd.rotateToTarget;
-
-                    if (m_Targets[i] && m_Patrons[i])
+                    if (dd.pursue)
                     {
-                        dd.endPosition = m_Targets[i].position;
-                    }
-                    if (!m_Targets[i] && m_Patrons[i])
-                    {
-                        dd.endPosition = m_Patrons[i].position;
+                        if (m_Targets[i] && m_Patrons[i])
+                        {
+                            dd.endPosition = m_Targets[i].position;
+                        }
+                        if (!m_Targets[i] && m_Patrons[i])
+                        {
+                            dd.endPosition = m_Patrons[i].position;
+                        }
                     }
                     td.startPosition = dd.startPosition;
                     td.endPosition = dd.endPosition;
@@ -219,11 +226,9 @@ public class TrajectoryDealer : MonoBehaviour
                     td.time = dd.currentTime;
                     td.offsetMultipler = dd.allCurvesPower;
 
-
                     // apply
                     tempData[i] = td; // Данные которые отправятся
                     m_DynamicData[i] = dd;
-
                 }
             }
 
@@ -233,7 +238,7 @@ public class TrajectoryDealer : MonoBehaviour
             };
 
             handles = moveJob.Schedule(accessArray);
-            handles.Complete();
+handles.Complete();
         }
     }
 
@@ -246,35 +251,47 @@ public class TrajectoryDealer : MonoBehaviour
         else return false;
     }
 
-    public void CreatePatron(DynamicData data, Transform patron, Transform target, UnityEvent<Transform, Transform> onComplete)
+    public void CreatePatron(DynamicData data, Transform patron, Transform target, UnityEvent<Transform, Transform> onComplete, System.Action cansel)
     {
-        if (!AllowBuild()) return;
+
+        if (!AllowBuild()) { Debug.Log("Нельзя"); cansel(); return; };
+        created++;
+        StartCoroutine(WaitTemp());
         if (data.missilesType.UseRandomCurve)
         {
             data.missilesType.XOffset = data.missilesType.SetRandomKeys(data.missilesType.XOffset, data.missilesType.RandomMinX, data.missilesType.RandomMaxX);
             data.missilesType.YOffset = data.missilesType.SetRandomKeys(data.missilesType.YOffset, data.missilesType.RandomMinY, data.missilesType.RandomMaxY);
         }
+        currentPatrons++;
         if (UseJob)
         {
             CreateAllList(data, patron, target, onComplete);
-            StartCoroutine(ConfigureArray());
+            ConfigureArray();
         }
         else
         {
             CreateAllList(data, patron, target, onComplete);
         }
     }
+    private IEnumerator WaitTemp()
+    {
+        tempBlock = true;
+        yield return new WaitForSeconds(0.0000001f);
+        tempBlock = false;
+    }
+    [SerializeField]
+    private bool tempBlock = false;
 
     [SerializeField]
     private bool isCreated = false;
-    private IEnumerator ConfigureArray()
+    private void ConfigureArray()
     {
         if (isCreated)
         {
             DisposeAllTemp();
         }
         CreateAllTemp();
-        yield return new WaitUntil(() => accessArray.isCreated);
+        //yield return new WaitUntil(() => accessArray.isCreated);
     }
     [BurstCompile]
     public struct Mover : IJobParallelForTransform
@@ -283,9 +300,9 @@ public class TrajectoryDealer : MonoBehaviour
         public void Execute(int i, TransformAccess transform)
         {
             Vector2 target = (data[i].endPosition + (data[i].offset * data[i].offsetMultipler));
-            float tempSpeed = 0f;
+            //float tempSpeed = 0f;
 
-            if (Vector2.Distance(transform.position, data[i].endPosition) < 1f) tempSpeed += 0.01f;
+            //if (Vector2.Distance(transform.position, data[i].endPosition) < 1f) tempSpeed += 0.01f;
             Vector3 nextPosition = (Vector3.LerpUnclamped(data[i].startPosition, target, data[i].speed));
             if (data[i].rotateToTarget)
             {

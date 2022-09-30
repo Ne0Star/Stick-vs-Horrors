@@ -30,14 +30,11 @@ public class Patron : MonoBehaviour
     [SerializeField] private TweenScaleData exploseIn, exploseOut;
 
     [SerializeField] private float exploseDistance, explosePower;
-
     [SerializeField] private bool rotateToVelocity;
     [SerializeField] private float rotateOffset;
     [SerializeField] private OnPatronKill onKill;
     [SerializeField] private CustomShadow shadow;
-    [SerializeField] private Rigidbody2D body;
     [SerializeField] private Vector3 startScale;
-    public Rigidbody2D Body { get => body; }
     public CustomShadow Shadow { get => shadow; }
     public OnPatronKill OnKill { get => onKill; }
 
@@ -45,7 +42,6 @@ public class Patron : MonoBehaviour
     {
         startScale = transform.localScale;
     }
-    private bool animate = false;
     [SerializeField] private float minY;
 
     public void SetMaxY(float minY)
@@ -55,14 +51,10 @@ public class Patron : MonoBehaviour
 
     private void Update()
     {
-        if (block) return;
-        if(rotateToVelocity)
-        {
-            GameUtils.LookAt2D(transform, (Vector2)transform.position + body.velocity, rotateOffset);
-        }
+        //if (block) return;
         if (transform.position.y <= minY)
         {
-            block = true;
+            //block = true;
             Explose();
         }
     }
@@ -77,16 +69,15 @@ public class Patron : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, exploseDistance);
     }
 
-    private bool block = false;
     private void OnEnable()
     {
-        if (rotateToVelocity)
-        {
-            GameUtils.LookAt2D(transform, (Vector2)transform.position + body.velocity, rotateOffset);
-        }
-        block = false;
+        shadow.gameObject.SetActive(true);
         transform.localScale = startScale;
-        body.isKinematic = false;
+    }
+
+    private void OnDisable()
+    {
+        shadow.gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -94,20 +85,18 @@ public class Patron : MonoBehaviour
     /// </summary>
     public void AnimateExplose()
     {
-        block = false;
         transform.DOScale(exploseIn.Scale, exploseIn.Duration).OnComplete(() =>
         {
-            transform.DOScale(startScale, exploseOut.Duration).OnComplete(() =>
+            transform.DOScale(startScale, exploseOut.Duration).OnKill(() =>
             {
+
             }).SetEase(exploseOut.Easing);
         }).SetEase(exploseIn.Easing);
     }
     public void AnimateExplose(System.Action onComplete)
     {
-        block = false;
         transform.DOScale(exploseIn.Scale, exploseIn.Duration).OnComplete(() =>
         {
-
             transform.DOScale(startScale, exploseOut.Duration).OnKill(() =>
             {
                 onComplete();
@@ -117,12 +106,9 @@ public class Patron : MonoBehaviour
     }
     public void Explose()
     {
-        body.isKinematic = true;
-        body.velocity = Vector3.zero;
-
         transform.DOScale(exploseIn.Scale, exploseIn.Duration).OnComplete(() =>
         {
-            transform.DOScale(exploseOut.Scale, exploseOut.Duration).OnComplete(() =>
+            transform.DOScale(exploseOut.Scale, exploseOut.Duration).OnKill(() =>
             {
                 onKill?.Invoke();
             }).SetEase(exploseOut.Easing);
@@ -130,16 +116,11 @@ public class Patron : MonoBehaviour
         }).SetEase(exploseIn.Easing);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (block) return;
-        block = true;
-        Explose();
-    }
-
-    //private void OnBecameInvisible()
+    //private void OnCollisionEnter2D(Collision2D collision)
     //{
-    //    Destroy(gameObject);
+    //    if (block) return;
+    //    block = true;
+    //    Explose();
     //}
 
 }

@@ -31,7 +31,7 @@ public class TrajectorySystem : MonoBehaviour
         }
     }
 
-    public void CreatePatron(DynamicData data, Transform patron, Transform target, UnityEvent<Transform, Transform> OnReached)
+    public void CreatePatron(DynamicData data, Transform patron, Transform target, UnityEvent<Transform, Transform> OnReached, System.Action cansel)
     {
         if (currentCount == trajectories.Length)
         {
@@ -42,24 +42,29 @@ public class TrajectorySystem : MonoBehaviour
             if (d.ContainsPatron(patron)) return;
         }
 
-        trajectories[currentCount].CreatePatron(data, patron, target, OnReached);
+        trajectories[currentCount].CreatePatron(data, patron, target, OnReached,cansel);
         currentCount++;
     }
 
-    public void CreatePatron(DynamicData data, Transform patron, Transform target, Action<Transform, Transform> value)
+    public void CreatePatron(DynamicData data, Action<Transform, Transform> value, System.Action cansel)
     {
         UnityEvent<Transform, Transform> tempEvent = new UnityEvent<Transform, Transform>();
         tempEvent?.AddListener((p, t) => value(p, t));
-        if (currentCount == trajectories.Length)
+        if (currentCount >= trajectories.Length)
         {
             currentCount = 0;
         }
         foreach (TrajectoryDealer d in trajectories)
         {
-            if (d.ContainsPatron(patron)) return;
+            if (d.ContainsPatron(data.patron))
+            {
+
+                cansel();
+                return;
+            };
         }
 
-        trajectories[currentCount].CreatePatron(data, patron, target, tempEvent);
+        trajectories[currentCount].CreatePatron(data, data.patron, data.target, tempEvent, cansel);
         currentCount++;
     }
 }

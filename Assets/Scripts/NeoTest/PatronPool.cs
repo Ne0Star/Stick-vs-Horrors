@@ -27,7 +27,7 @@ public class PatronPool : MonoBehaviour
             PatronParent patron = Instantiate<PatronParent>(patronPrefab);
             patron.transform.parent = transform;
             allPatrons.Add(patron);
-            patron.gameObject.SetActive(false);
+            patron.GetPatron().gameObject.SetActive(false);
         }
     }
 
@@ -36,15 +36,33 @@ public class PatronPool : MonoBehaviour
         PatronParent result = null;
         foreach (PatronParent p in allPatrons)
         {
-            if (p)
-                if (!p.gameObject.activeInHierarchy)
+            if (p.GetPatron())
+            {
+                if (!p.GetPatron().gameObject.activeInHierarchy)
                 {
                     result = p;
                     break;
                 }
+            }
         }
         result.gameObject.SetActive(true);
         return result.GetPatron(worldSpawnPoint);
     }
-
+    public Patron GetFreePatron(Vector3 worldSpawnPoint, Quaternion spawnRotation)
+    {
+        PatronParent result = null;
+        foreach (PatronParent p in allPatrons)
+        {
+            if (p.GetPatron())
+            {
+                if (!p.GetPatron().gameObject.activeInHierarchy)
+                {
+                    result = p;
+                    break;
+                }
+            }
+        }
+        result.gameObject.SetActive(true);
+        return result.GetPatron(worldSpawnPoint, spawnRotation);
+    }
 }

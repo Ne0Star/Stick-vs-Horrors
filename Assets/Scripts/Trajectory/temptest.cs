@@ -46,11 +46,6 @@ public class temptest : MonoBehaviour
     [SerializeField] private DynamicData preview;
 
 
-    private void OnDrawGizmos()
-    {
-        if (preview != patron.GetMoveData(movable, target, transform)) preview = patron.GetMoveData(movable, target, transform);
-    }
-
     // Start is called before the first frame update
     void Start()
     {
@@ -78,12 +73,12 @@ public class temptest : MonoBehaviour
             //};
 
 
-            tj.CreatePatron(patron.GetMoveData(movable, target, transform), movable, target, (p, t) =>
-            {
+            //tj.CreatePatron(patron.GetMoveData(movable, target, transform), (p, t) =>
+            //{
 
-                movable.position = lastPos;
+            //    movable.position = lastPos;
 
-            });
+            //});
         }
 
     }

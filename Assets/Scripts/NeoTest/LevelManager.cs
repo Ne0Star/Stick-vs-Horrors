@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class LevelManager : OneSingleton<LevelManager>
 {
+    [SerializeField] private ShadowManager shadowManager;
     [SerializeField] private PatronPool patronPool;
     [SerializeField] private List<GameObject> allEnemiesAndBuilds;
     [SerializeField] private List<Enemu> allEnemu;
@@ -15,18 +16,20 @@ public class LevelManager : OneSingleton<LevelManager>
     public float MaxY { get => maxY; }
     public string TerrainTag { get => terrainTag; }
     public PatronPool PatronPool { get => patronPool; }
+    public ShadowManager ShadowManager { get => shadowManager; }
 
     private void Awake()
     {
         LevelManager.Instance = this;
-
+        shadowManager = FindObjectOfType<ShadowManager>();
+        patronPool = FindObjectOfType<PatronPool>();
+        allEnemu.AddRange(FindObjectsOfType<Enemu>());
 
     }
 
     private void Start()
     {
-        patronPool = FindObjectOfType<PatronPool>();
-        allEnemu.AddRange(FindObjectsOfType<Enemu>());
+        Application.targetFrameRate = 60;
         //allEnemiesAndBuilds.AddRange(GameObject.FindGameObjectsWithTag("enemu"));
     }
     public void DealSplah(float exploseDistance, float explosePower)

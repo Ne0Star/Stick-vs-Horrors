@@ -83,6 +83,10 @@ public class TrajectoryEditor : Editor
         if (creator.useCurves)
         {
             GUILayout.BeginHorizontal(scrollSkin);
+            creator.missilesType.UseRandomCurve = GUILayout.Toggle(creator.missilesType.UseRandomCurve, "Добавить рандомное смещение ?");
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal(scrollSkin);
             GUILayout.Label("Сила смещения: ");
             creator.allCurvesPower = EditorGUILayout.FloatField(creator.allCurvesPower);
             GUILayout.EndHorizontal();
@@ -98,6 +102,27 @@ public class TrajectoryEditor : Editor
             EditorGUILayout.CurveField(creator.missilesType.YOffset);
             EditorGUILayout.CurveField(creator.missilesType.SpeedInterpolator);
             GUILayout.EndHorizontal();
+
+            if(creator.missilesType.UseRandomCurve)
+            {
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("MinX");
+            GUILayout.Label("MaxX");
+            GUILayout.Label("MinY");
+            GUILayout.Label("MaxY");
+            GUILayout.EndHorizontal();
+            GUILayout.BeginHorizontal();
+            creator.missilesType.RandomMinX = EditorGUILayout.FloatField(creator.missilesType.RandomMinX);
+            creator.missilesType.RandomMaxX = EditorGUILayout.FloatField(creator.missilesType.RandomMaxX);
+            creator.missilesType.RandomMinY = EditorGUILayout.FloatField(creator.missilesType.RandomMinY);
+            creator.missilesType.RandomMaxY = EditorGUILayout.FloatField(creator.missilesType.RandomMaxY);
+            GUILayout.EndHorizontal();
+            }
+
+
+
+
+
             GUILayout.EndVertical();
             GUILayout.Label("");
         }

@@ -16,28 +16,46 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   missilesType:
-    useRandomCurve: 0
-    randomMinX: 0
-    randomMaxX: 0
-    randomMinY: 0
-    randomMaxY: 0
+    useRandomCurve: 1
+    randomMinX: 1
+    randomMaxX: 1
+    randomMinY: 1
+    randomMaxY: 1
     yOffset:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
+        value: 0.05000305
+        inSlope: -0.017158372
+        outSlope: -0.017158372
         tangentMode: 34
         weightedMode: 0
         inWeight: 0
         outWeight: 0.33333334
       - serializedVersion: 3
+        time: 0.20283525
+        value: 0.04652273
+        inSlope: -0.049989548
+        outSlope: -0.049989548
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.13830402
+      - serializedVersion: 3
+        time: 0.49881232
+        value: 0.018243242
+        inSlope: -0.06597312
+        outSlope: -0.06597312
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
         time: 1
         value: 0
-        inSlope: 0
-        outSlope: 0
+        inSlope: -0.03640002
+        outSlope: -0.03640002
         tangentMode: 34
         weightedMode: 0
         inWeight: 0.33333334
@@ -51,17 +69,26 @@ MonoBehaviour:
       - serializedVersion: 3
         time: 0
         value: 0
-        inSlope: 0
-        outSlope: 0
+        inSlope: 0.18721813
+        outSlope: 0.18721813
         tangentMode: 34
         weightedMode: 0
         inWeight: 0
         outWeight: 0.33333334
       - serializedVersion: 3
+        time: 0.25178146
+        value: 0.047138054
+        inSlope: 0.062108874
+        outSlope: 0.062108874
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
         time: 1
         value: 0
-        inSlope: 0
-        outSlope: 0
+        inSlope: -0.06300038
+        outSlope: -0.06300038
         tangentMode: 34
         weightedMode: 0
         inWeight: 0.33333334
@@ -93,12 +120,12 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  allCurvesPower: 0
-  moveSpeed: 0.01
-  reachRange: 0.1
-  rotateOffset: 90
+  allCurvesPower: 120
+  moveSpeed: 0.5
+  reachRange: 0.01
+  rotateOffset: 0
   useCurves: 1
-  usePursue: 1
+  usePursue: 0
   useZRotation: 1
   target: {fileID: 0}
   endPosition: {x: 0, y: 0, z: 0}

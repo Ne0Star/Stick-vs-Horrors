@@ -73,15 +73,5 @@ public class GunController : MonoBehaviour
 
 
         currentDrag = Mathf.Clamp(currentDrag - tempSpeed, 0, maxDrag);
-        //currentDrag -= (currentDrag * 0.1f);
-
-
-        //header.transform.rotation = Quaternion.Euler(
-        //        0,
-        //        0,
-        //        current + headerOffset);
-        //facingg = WrapAngle(current);
-
-
     }
 }

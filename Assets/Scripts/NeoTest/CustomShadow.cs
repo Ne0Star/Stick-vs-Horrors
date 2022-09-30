@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class CustomShadow : MonoBehaviour
 {
+    public event System.Action<bool> OnVisible;
+
     [SerializeField] private SpriteRenderer r;
     [SerializeField] private Transform alphaTarget;
     [SerializeField] private bool alphaToDistance, scaleToDistance, blockRotate;
@@ -11,17 +14,32 @@ public class CustomShadow : MonoBehaviour
     [SerializeField] private float fixedY;
     [SerializeField] private Vector3 startScale;
 
+    private void OnBecameVisible()
+    {
+        OnVisible?.Invoke(true);
+    }
+    private void OnEnable()
+    {
+        OnVisible?.Invoke(true);
+    }
+    private void OnDisable()
+    {
+        OnVisible?.Invoke(false);
+    }
+
+    private void OnBecameInvisible()
+    {
+        OnVisible?.Invoke(false);
+    }
+
     private void Start()
     {
+        LevelManager.Instance.ShadowManager.AddShadow(this);
+
         startScale = transform.localScale;
     }
 
-    public void SetY(float y)
-    {
-        fixedY = y;
-    }
-
-    private void Update()
+    public void Draw()
     {
         transform.position = new Vector3(alphaTarget.transform.position.x, fixedY);
         float distanceY = Vector2.Distance(new Vector2(0, transform.position.y), new Vector2(0, alphaTarget.position.y));
@@ -35,5 +53,10 @@ public class CustomShadow : MonoBehaviour
             float scale = Mathf.InverseLerp(0, distanceY, maxScaleDistance * scaleMultipler);
             transform.localScale = new Vector3(startScale.x * scale, startScale.y * scale, startScale.z * scale);
         }
+    }
+
+    public void SetY(float y)
+    {
+        fixedY = y;
     }
 }
