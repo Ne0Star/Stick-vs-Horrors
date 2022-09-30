@@ -5470,7 +5470,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6822644580939072624, guid: 185cd45a075f618468bc139fdd53bbc5, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6822644580939072624, guid: 185cd45a075f618468bc139fdd53bbc5, type: 3}
       propertyPath: m_LocalScale.x
@@ -8388,7 +8388,7 @@ Transform:
   - {fileID: 153979914370535014}
   - {fileID: 884674247}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1526619154
 MonoBehaviour:
@@ -8854,7 +8854,7 @@ MonoBehaviour:
   m_Spline:
     m_IsOpenEnded: 0
     m_ControlPoints:
-    - position: {x: -13.168758, y: -8.316003, z: 0}
+    - position: {x: 6.047329, y: -6.216203, z: 0}
       leftTangent: {x: 0, y: 0, z: 0}
       rightTangent: {x: 11.355934, y: 2.4871826, z: 0}
       mode: 2
@@ -8874,9 +8874,9 @@ MonoBehaviour:
       spriteIndex: 0
       corner: 1
       m_CornerMode: 1
-    - position: {x: 75.66524, y: 37.975067, z: 0}
+    - position: {x: 63.295574, y: 76.78179, z: 0}
       leftTangent: {x: 0, y: 0, z: 0}
-      rightTangent: {x: -2.910019, y: 0.7767067, z: 0}
+      rightTangent: {x: -2.9099274, y: 0.7767334, z: 0}
       mode: 2
       height: 1
       bevelCutoff: 0
@@ -8884,7 +8884,7 @@ MonoBehaviour:
       spriteIndex: 0
       corner: 1
       m_CornerMode: 1
-    - position: {x: 0.0017433167, y: 33.860184, z: 0}
+    - position: {x: 17.31319, y: 76.18646, z: 0}
       leftTangent: {x: 0, y: 0, z: 0}
       rightTangent: {x: 0, y: 0, z: 0}
       mode: 0
@@ -8927,7 +8927,7 @@ SpriteShapeRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
+  m_RenderingLayerMask: 2
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
@@ -8952,7 +8952,7 @@ SpriteShapeRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -10
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_MaskInteraction: 0
   m_ShapeTexture: {fileID: 2800000, guid: 7707aebe6fed35f44a58a9b7a2d5af62, type: 3}
   m_Sprites:
@@ -8965,8 +8965,8 @@ SpriteShapeRenderer:
   - {fileID: 21300000, guid: 608e61deb05c54660bebf5a4dd2ee02d, type: 3}
   - {fileID: 21300000, guid: 608e61deb05c54660bebf5a4dd2ee02d, type: 3}
   m_LocalAABB:
-    m_Center: {x: 34.979374, y: 14.837842, z: 0}
-    m_Extent: {x: 48.148132, y: 23.153845, z: 0}
+    m_Center: {x: 44.587414, y: 34.34432, z: 0}
+    m_Extent: {x: 38.540085, y: 42.659145, z: 0}
 --- !u!4 &1543418507
 Transform:
   m_ObjectHideFlags: 0
@@ -8980,7 +8980,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1556291386
 GameObject:
@@ -9526,7 +9526,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1795607173
 MonoBehaviour:
@@ -9544,11 +9544,11 @@ MonoBehaviour:
   m_LightType: 4
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 1
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0.3
+  m_Color: {r: 0.13581344, g: 0.26415092, b: 0.26415092, a: 1}
+  m_Intensity: 4.72
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: 000000002f345dc9614c827707a5e8ed0d27bd9f1bd46a32
+  m_ApplyToSortingLayers: 00000000
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -11408,7 +11408,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2019919473
 SpriteRenderer:
@@ -11427,10 +11427,10 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
+  m_RenderingLayerMask: 2
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
