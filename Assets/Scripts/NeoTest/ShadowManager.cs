@@ -42,8 +42,9 @@ public class ShadowManager : MonoBehaviour
     {
         foreach (CustomShadow shadow in activeShadow)
         {
+            if (!shadow.gameObject.activeInHierarchy) continue;
             shadow.Draw();
-            
+
         }
         yield return new WaitForSeconds(updateTime);
         StartCoroutine(Life());
