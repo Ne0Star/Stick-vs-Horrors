@@ -2,15 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemu : MonoBehaviour
+public class Enemu : Entity
 {
     [SerializeField] private float initialMass;
     [SerializeField] private List<Ball> balls;
     [SerializeField] private Rigidbody2D mainBody;
-
+    [SerializeField] private LimbStrength[] limbs;
     public Rigidbody2D MainBody { get => mainBody; }
 
     private void Start()
+    {
+
+    }
+
+    protected override void OnTakeDamage(float damage)
     {
 
     }

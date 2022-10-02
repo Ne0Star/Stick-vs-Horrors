@@ -120,7 +120,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  allCurvesPower: 120
+  allCurvesPower: 10
   moveSpeed: 0.5
   reachRange: 0.01
   rotateOffset: 0
