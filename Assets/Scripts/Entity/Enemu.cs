@@ -15,6 +15,12 @@ public class Enemu : Entity
 
     }
 
+    private void Awake()
+    {
+        
+    }
+
+
     protected override void OnTakeDamage(float damage)
     {
 

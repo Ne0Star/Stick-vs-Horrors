@@ -26,18 +26,36 @@ MonoBehaviour:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
+        value: 0.05000305
+        inSlope: -0.017158372
+        outSlope: -0.017158372
         tangentMode: 34
         weightedMode: 0
         inWeight: 0
         outWeight: 0.33333334
       - serializedVersion: 3
+        time: 0.20283525
+        value: 0.04652273
+        inSlope: -0.049989548
+        outSlope: -0.049989548
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.13830402
+      - serializedVersion: 3
+        time: 0.49881232
+        value: 0.018243242
+        inSlope: -0.06597312
+        outSlope: -0.06597312
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
         time: 1
         value: 0
-        inSlope: 0
-        outSlope: 0
+        inSlope: -0.03640002
+        outSlope: -0.03640002
         tangentMode: 34
         weightedMode: 0
         inWeight: 0.33333334
@@ -51,17 +69,26 @@ MonoBehaviour:
       - serializedVersion: 3
         time: 0
         value: 0
-        inSlope: 0
-        outSlope: 0
+        inSlope: 0.16587865
+        outSlope: 0.16587865
         tangentMode: 34
         weightedMode: 0
         inWeight: 0
         outWeight: 0.33333334
       - serializedVersion: 3
+        time: 0.2232779
+        value: 0.037037037
+        inSlope: 0.05909744
+        outSlope: 0.05909744
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
         time: 1
         value: 0
-        inSlope: 0
-        outSlope: 0
+        inSlope: -0.04768377
+        outSlope: -0.04768377
         tangentMode: 34
         weightedMode: 0
         inWeight: 0.33333334
@@ -94,7 +121,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   allCurvesPower: 10
-  moveSpeed: 0.8
+  moveSpeed: 0.6
   reachRange: 2
   rotateOffset: 0
   useCurves: 1
