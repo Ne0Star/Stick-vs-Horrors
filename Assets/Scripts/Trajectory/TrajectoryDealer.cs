@@ -251,10 +251,10 @@ handles.Complete();
         else return false;
     }
 
-    public void CreatePatron(DynamicData data, Transform patron, Transform target, UnityEvent<Transform, Transform> onComplete, System.Action cansel)
+    public void CreatePatron(DynamicData data, Transform patron, Transform target, UnityEvent<Transform, Transform> onComplete, System.Action<string> cansel)
     {
 
-        if (!AllowBuild()) { Debug.Log("Нельзя"); cansel(); return; };
+        if (!AllowBuild()) { cansel("Запрещенно"); return; };
         created++;
         StartCoroutine(WaitTemp());
         if (data.missilesType.UseRandomCurve)

@@ -37,27 +37,5 @@ public class LevelManager : OneSingleton<LevelManager>
         Application.targetFrameRate = 60;
         //allEnemiesAndBuilds.AddRange(GameObject.FindGameObjectsWithTag("enemu"));
     }
-    public void DealSplah(float exploseDistance, float explosePower)
-    {
-        foreach (Enemu e in allEnemu)
-        {
-            float distance = Vector2.Distance(transform.position, e.transform.position);
-            float percent = Mathf.InverseLerp(exploseDistance, 0, distance);
-            e.MainBody.AddForce((e.transform.position - transform.position).normalized * (percent * explosePower), ForceMode2D.Impulse);
-        }
 
-
-    }
-
-    public void Test(Patron patron, System.Action patronComplete)
-    {
-        StartCoroutine(Wait(patron, patronComplete));
-    }
-
-    private IEnumerator Wait(Patron patron, System.Action patronComplete)
-    {
-        yield return new WaitForSeconds(1f);
-
-        patronComplete?.Invoke();
-    }
 }

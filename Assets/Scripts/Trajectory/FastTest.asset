@@ -121,11 +121,11 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   allCurvesPower: 10
-  moveSpeed: 0.6
+  moveSpeed: 1
   reachRange: 2
   rotateOffset: 0
   useCurves: 1
-  usePursue: 0
+  usePursue: 1
   useZRotation: 1
   target: {fileID: 0}
   endPosition: {x: 0, y: 0, z: 0}

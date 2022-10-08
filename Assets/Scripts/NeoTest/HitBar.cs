@@ -176,10 +176,6 @@ public abstract class HitBar : MonoBehaviour
 
         UpdateData();
     }
-    protected void FixedUpdate()
-    {
-        UpdateData();
-    }
 
     protected void OnDrawGizmos()
     {

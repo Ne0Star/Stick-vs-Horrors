@@ -31,6 +31,9 @@ public class UIManager : MonoBehaviour
             {
                 one = true;
             });
+        } else
+        {
+            one = true;
         }
         if (data.position.use)
         {
@@ -38,6 +41,9 @@ public class UIManager : MonoBehaviour
             {
                 two = true;
             });
+        } else
+        {
+            two = true;
         }
         if (data.rotate.use)
         {
@@ -45,6 +51,9 @@ public class UIManager : MonoBehaviour
             {
                 three = true;
             });
+        } else
+        {
+            three = true;
         }
         yield return new WaitUntil(() => one && two && three);
         onComplete();
@@ -69,6 +78,7 @@ public class UIManager : MonoBehaviour
         {
             if (page.gameObject)
             {
+                Debug.Log("Close");
                 page.gameObject.SetActive(false);
             }
         }));

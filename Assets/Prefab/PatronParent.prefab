@@ -441,3 +441,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   patron: {fileID: 4702427322662198794}
+  coldownTime: 2
+  currentTime: 0

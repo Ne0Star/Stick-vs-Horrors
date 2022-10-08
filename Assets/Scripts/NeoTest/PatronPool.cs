@@ -16,6 +16,7 @@ public class PatronPool : MonoBehaviour
 
 
     [SerializeField] private int batchCount;
+    [SerializeField] private float time;
     [SerializeField] private PatronParent patronPrefab;
     [SerializeField] private List<PatronParent> allPatrons;
 
@@ -29,6 +30,19 @@ public class PatronPool : MonoBehaviour
             allPatrons.Add(patron);
             patron.GetPatron().gameObject.SetActive(false);
         }
+        StartCoroutine(PatronLife());
+    }
+
+    private IEnumerator PatronLife()
+    {
+
+        foreach(PatronParent patron in allPatrons)
+        {
+            patron.Tick();
+        }
+
+        yield return new WaitForSeconds(time);
+        StartCoroutine(PatronLife());
     }
 
     public Patron GetFreePatron(Vector3 worldSpawnPoint)

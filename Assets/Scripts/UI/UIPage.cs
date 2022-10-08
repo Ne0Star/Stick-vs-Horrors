@@ -48,6 +48,10 @@ public abstract class UIPage : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     private RectTransform rect;
     public RectTransform Rect => rect;
 
+    public OnUpPage OnUppage { get => onUppage; }
+    public OnOpenPage OnOpenpage { get => onOpenpage; }
+    public OnClosePage OnClosepage { get => onClosepage; }
+
     public void OnPointerUp(PointerEventData data)
     {
         onUppage?.Invoke();
@@ -70,6 +74,8 @@ public abstract class UIPage : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     [SerializeField] protected int id;
     private void Awake()
     {
+        //onClosepage = new OnClosePage();
+        //onOpenpage = new OnOpenPage();
         if (setCloseStats)
         {
             animator.SetCloseStats(transform);

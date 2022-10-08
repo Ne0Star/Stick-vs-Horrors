@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1d3d69614f5968a4ea848ac0ae452fcd, type: 3}
-  m_Name: Standart
+  m_Name: AnimStandart
   m_EditorClassIdentifier: 
   openStats:
     position:
@@ -33,7 +33,7 @@ MonoBehaviour:
       use: 1
       easing: 26
       duration: 0.1
-      value: {x: 1000, y: 0, z: 0}
+      value: {x: -1000, y: 0, z: 0}
     scale:
       use: 1
       easing: 26

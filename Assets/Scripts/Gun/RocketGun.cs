@@ -79,19 +79,23 @@ public class RocketGun : Gun
                         //Debug.Log(limb);
                         if (limb)
                         {
-limb.TakeDamage(attackDamage, 5f, p.position);
-                            Debug.Log("Taks");
+                            limb.TakeDamage(attackDamage, attackDamage / 2, p.position);
+                            //Debug.Log("Taks");
                         }
-                            
+
                         patron.OnKill?.Invoke();
-                    }, () =>
+                    }, (e) =>
                     {
+                        Debug.Log("Не удалось создать патрон: " + e);
                         canceled++;
                         reached++;
                         patron.OnKill?.Invoke();
                     });
 
                 });
+            } else
+            {
+                Debug.Log("НЕТ ПАТРОНОВ ??");
             }
 
             yield return new WaitForSeconds(attackSpeed + Random.Range(0, attackSpeed));
