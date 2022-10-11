@@ -16,7 +16,7 @@ public class Balance : UIPage
 
     private void UpdateDisplayData()
     {
-        moneyText.text = YandexGame.savesData.money + " ";
+        moneyText.text = YandexGame.savesData.Money + " ";
 
     }
 

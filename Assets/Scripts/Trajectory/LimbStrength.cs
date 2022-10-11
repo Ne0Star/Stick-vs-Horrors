@@ -72,7 +72,8 @@ public class LimbStrength : MonoBehaviour
             particle.gameObject.SetActive(false);
             waitParticle = false;
         }
-
+        colider.enabled = true;
+        body.simulated = true;
         body.velocity = Vector2.zero;
         body.angularDrag = 0f;
         body.angularVelocity = 0f;
@@ -82,10 +83,28 @@ public class LimbStrength : MonoBehaviour
         if (childrenLimb)
             childrenLimb.TakeDamage(9999f, 5, transform.position);
     }
-
+    private void OnBecameVisible()
+    {
+        currentStrength = maxStrength;
+        if (colider)
+            colider.enabled = true;
+        body.isKinematic = true;
+        if (particle)
+        {
+            particle.gameObject.SetActive(false);
+            waitParticle = false;
+        }
+        colider.enabled = true;
+        body.simulated = true;
+        body.velocity = Vector2.zero;
+        body.angularDrag = 0f;
+        body.angularVelocity = 0f;
+    }
     private void OnBecameInvisible()
     {
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
+        colider.enabled = false;
+        body.isKinematic = true;
         transform.parent = startParent;
         transform.localPosition = startPosition;
         transform.localRotation = startRotation;
@@ -136,6 +155,7 @@ public class LimbStrength : MonoBehaviour
                 transform.parent = null;
 
             body.isKinematic = false;
+            body.velocity = Vector2.zero;
             //body.simulated = true;
             body.AddForce((transform.position - patronPosition) * gunPower, ForceMode2D.Impulse);
             onBreak?.Invoke(this);

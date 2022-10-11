@@ -1,4 +1,6 @@
 ﻿
+using UnityEngine;
+
 namespace YG
 {
     [System.Serializable]
@@ -11,7 +13,24 @@ namespace YG
         public int languageIndex = 0;
 
         // Ваши сохранения
-        public int money = 300;
-        public int score = 0;
+        /// <summary>
+        /// Предметы игрока
+        /// </summary>
+        public InventoryData[] items = null;
+        /// <summary>
+        /// Монеты
+        /// </summary>
+        public int Money = 300;
+        /// <summary>
+        /// Рекорд
+        /// </summary>
+        public int Score = 0;
+    }
+
+    [System.Serializable]
+    public struct InventoryData
+    {
+        public int id;
+        public int count;
     }
 }

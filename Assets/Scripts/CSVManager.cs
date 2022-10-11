@@ -23,7 +23,6 @@ public class CSVManager
         for (int i = 1; i < keys.Length; i++)
         {
             string[] translates = Regex.Split(keys[i], ",");
-
             if (translates[0] == key)
             {
                 for (int i2 = 0; i2 < languagesCount; i2++)
@@ -38,7 +37,7 @@ public class CSVManager
             return result;
         else
         {
-            Debug.Log("(en) Couldn't find a translation for this object! (ru) Не удалось найти перевод для данного объекта!");
+            Debug.LogWarning("(en) Couldn't find a translation for this object! (ru) Не удалось найти перевод для данного объекта!");
             return null;
         }
     }

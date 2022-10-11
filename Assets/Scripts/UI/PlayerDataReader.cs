@@ -10,14 +10,8 @@ public class PlayerDataReader : MonoBehaviour
     public Text money, score;
     public Text _name;
 
-    private void OnDisable()
+    private void Awake()
     {
-        YandexGame.GetDataEvent -= ReadAndWriteData;
-    }
-
-    private void OnEnable()
-    {
-
         YandexGame.GetDataEvent += ReadAndWriteData;
     }
 
@@ -28,11 +22,14 @@ public class PlayerDataReader : MonoBehaviour
         if (_name != null)
             _name.text = YandexGame.playerName;
         if (money)
-            money.text = YandexGame.savesData.money + "";
+            money.text = YandexGame.savesData.Money + "";
         if (score)
-            score.text = YandexGame.savesData.score + "";
+            score.text = YandexGame.savesData.Score + "";
         if (imageLoad && YandexGame.auth)
             imageLoad.Load(YandexGame.playerPhoto);
+        } else
+        {
+            Debug.LogError("SDK не активироваг");
         }
 
     }

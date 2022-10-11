@@ -78,7 +78,6 @@ public class UIManager : MonoBehaviour
         {
             if (page.gameObject)
             {
-                Debug.Log("Close");
                 page.gameObject.SetActive(false);
             }
         }));

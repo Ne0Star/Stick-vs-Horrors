@@ -41,9 +41,9 @@ public class Patron : MonoBehaviour
     [SerializeField] private bool rotateToVelocity;
     [SerializeField] private float rotateOffset;
     [SerializeField] private OnPatronKill onKill;
-    [SerializeField] private CustomShadow shadow;
+    //[SerializeField] private CustomShadow shadow;
     [SerializeField] private Vector3 startScale;
-    public CustomShadow Shadow { get => shadow; }
+    //public CustomShadow Shadow { get => shadow; }
     public OnPatronKill OnKill { get => onKill; }
 
     private void Awake()
@@ -79,13 +79,7 @@ public class Patron : MonoBehaviour
 
     private void OnEnable()
     {
-        shadow.gameObject.SetActive(true);
         transform.localScale = startScale;
-    }
-
-    private void OnDisable()
-    {
-        shadow.gameObject.SetActive(false);
     }
 
     /// <summary>

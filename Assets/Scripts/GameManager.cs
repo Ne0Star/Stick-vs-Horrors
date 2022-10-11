@@ -1,19 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using YG;
+using static YG.SavesYG;
+
+public struct LocalizerData
+{
+    public string resultText;
+    public Font resultFont;
+}
 
 public class GameManager : OneSingleton<GameManager>
 {
+    public UnityEvent onByu;
+
     [SerializeField] private string currentLang = "ru";
+    [SerializeField] private InfoYG infoYg;
     [SerializeField] private TextAsset scvLanguages;
+    [SerializeField] private ShopManager shopManager;
     [SerializeField] private UIManager uiManager;
     [SerializeField] private UIPage loadPage;
+
+    public ShopManager ShopManager { get => shopManager; }
 
     private void Awake()
     {
         GameManager.Instance = this;
+        shopManager = FindObjectOfType<ShopManager>();
+        uiManager = FindObjectOfType<UIManager>();
         scvLanguages = Resources.Load<TextAsset>("TranslateCSV");
         YandexGame.SwitchLanguage(currentLang);
     }
@@ -54,11 +71,62 @@ public class GameManager : OneSingleton<GameManager>
 
     }
 
-    public string GetValueByKey(string key)
+    public LocalizerData GetValueByKey(string key)
     {
-        string[] values = CSVManager.ImportTransfersByKey("TranslateCSV", 26, key);
-        if (values == null) return "null :)";
-        return values[GetLangIndex(currentLang)];
+        string[] values = CSVManager.ImportTransfersByKey("TranslateCSV", 27, key);
+
+        if (values == null)
+        {
+            return new LocalizerData
+            {
+                resultFont = null,
+                resultText = "null :)"
+            };
+        };
+        int index = GetLangIndex(currentLang);
+        string result = values[index];
+        if (!infoYg || infoYg.fonts == null)
+        {
+            return new LocalizerData
+            {
+                resultFont = null,
+                resultText = "null :)"
+            };
+        }
+        Font[] fonts = infoYg.fonts.GetFontsByLanguageName(currentLang);
+        Font resultFont = null;
+        bool font = false;
+        if (fonts != null)
+            foreach (Font f in fonts)
+            {
+                if (f != null)
+                {
+                    resultFont = f;
+                    font = true;
+                    break;
+                }
+            }
+        if (!font)
+        {
+            foreach (Font f in infoYg.fonts.defaultFont)
+            {
+                if (f != null)
+                {
+                    resultFont = f;
+                    break;
+                }
+            }
+        }
+
+        //        if (values.Length < GetLangIndex(currentLang))
+        //        {
+        //result = values[GetLangIndex(currentLang)];
+        //        }
+        return new LocalizerData
+        {
+            resultFont = resultFont,
+            resultText = result
+        };
     }
 
 
@@ -72,15 +140,92 @@ public class GameManager : OneSingleton<GameManager>
 
     }
 
-    public void ByuItem(ShopItem item)
+    public void TestMethod()
     {
-        if (item != null)
+        YandexGame.savesData.Money += 1000;
+        YandexGame.SaveProgress();
+        onByu?.Invoke();
+    }
+
+    public void ByuItem(ShopItem shopItem)
+    {
+        if (shopItem != null)
         {
-            Debug.Log("Попытка купить: " + item);
+
+            if (YandexGame.savesData.Money - shopItem.cost <= 0)
+            {
+                Debug.Log("Недостаточно средств: " + YandexGame.savesData.Money + " / " + (YandexGame.savesData.Money - shopItem.cost));
+                return;
+            }
+
+            // Получить список покупок
+            InventoryData[] items = YandexGame.savesData.items;
+
+            // Покупка существуюзего предмета
+            bool isNew = true;
+            if (items != null)
+                for (int i = 0; i < items.Length; i++)
+                {
+                    if (items[i].id == shopItem.id)
+                    {
+                        isNew = false;
+                        if (shopItem.countType == ItemType.Множественный)
+                        {
+                            if (YandexGame.savesData.Money - shopItem.cost >= 0)
+                            {
+                                //Debug.Log("Было " + YandexGame.savesData.items[i].count);
+                                YandexGame.savesData.Money -= shopItem.cost;
+                                YandexGame.SaveProgress();
+                                YandexGame.savesData.items[i].count += shopItem.count;
+                                YandexGame.SaveProgress();
+                                //Debug.Log("Стало " + YandexGame.savesData.items[i].count);
+                            }
+                            else
+                            {
+                                Debug.Log("Недостаточно средств");
+                            }
+
+                            break;
+                        }
+                        else if (shopItem.countType == ItemType.Одиночный)
+                        {
+                            Debug.Log("Это одиночный предмет и он уже приобетён");
+                            break;
+                        }
+                    }
+                }
+            // Покупка нового предмета
+            if (isNew)
+            {
+                Debug.Log("Покупка нового преджмета");
+                List<InventoryData> newItems = new List<InventoryData>();
+
+                if (YandexGame.savesData.items != null)
+                    for (int i = 0; i < items.Length; i++)
+                    {
+                        newItems.Add(items[i]);
+
+
+                    }
+
+                newItems.Add(new InventoryData()
+                {
+                    count = shopItem.count,
+                    id = shopItem.id
+                });
+                YandexGame.savesData.Money -= shopItem.cost;
+                YandexGame.SaveProgress();
+                YandexGame.savesData.items = newItems.ToArray();
+                YandexGame.SaveProgress();
+
+            }
+
+            //YandexGame.SaveProgress();
+            onByu?.Invoke();
         }
         else
         {
-            Debug.Log("Неудалось купить: " + item);
+            Debug.Log("Неудалось купить: " + shopItem);
         }
     }
 

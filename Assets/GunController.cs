@@ -44,6 +44,12 @@ public class GunController : MonoBehaviour
         //    //blocker = false; 
         //});
     }
+
+    public void SetBlock(bool block)
+    {
+        this.blocker = block;
+    }
+
     public float distanceMultipler;
     public Vector3 prev;
     public Transform center;

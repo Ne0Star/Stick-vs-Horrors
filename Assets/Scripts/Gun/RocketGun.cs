@@ -12,9 +12,14 @@ public class RocketGun : Gun
     [SerializeField] private Transform target;
     [SerializeField] private GunController gunController;
     [SerializeField] private float distance;
+    [SerializeField] private float splashRadius;
     [SerializeField] private SpriteRenderer render;
     private void Start()
     {
+
+        if(!trajectory)
+            trajectory = FindObjectOfType<TrajectorySystem>();
+
         if (!pool)
             pool = LevelManager.Instance.PatronPool;
 
@@ -43,7 +48,7 @@ public class RocketGun : Gun
             if (patron)
             {
                 created++;
-                patron.Shadow.SetY(heightTarget.position.y);
+                //patron.Shadow.SetY(heightTarget.position.y);
                 patron.SetMaxY(heightTarget.position.y + 0.5f);
                 patron.SetOrder("Player", render.sortingOrder);
                 DynamicData dd = patronTrajectory.GetMoveData(patron.transform, dir, transform);
@@ -66,12 +71,14 @@ public class RocketGun : Gun
                     limb.TempDisableCollider();
 
 
+
+
+
+
                 //dd.pursue = true;
                 //dd.target = 
                 gunController.CreateDrag();
-                patron.AnimateExplose(() =>
-                {
-                    animated++;
+
 
                     trajectory.CreatePatron(dd, (p, t) =>
                     {
@@ -79,7 +86,9 @@ public class RocketGun : Gun
                         //Debug.Log(limb);
                         if (limb)
                         {
-                            limb.TakeDamage(attackDamage, attackDamage / 2, p.position);
+                            LevelManager.Instance.LimbManager.TakeSplashDamage(attackDamage, splashRadius, p.position);
+
+                            //limb.TakeDamage(attackDamage, attackDamage / 4, p.position);
                             //Debug.Log("Taks");
                         }
 
@@ -91,9 +100,15 @@ public class RocketGun : Gun
                         reached++;
                         patron.OnKill?.Invoke();
                     });
+                patron.AnimateExplose(() =>
+                {
+                    animated++;
+
+
 
                 });
-            } else
+            }
+            else
             {
                 Debug.Log("мер оюрпнмнб ??");
             }

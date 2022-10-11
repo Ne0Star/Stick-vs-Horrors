@@ -68,7 +68,7 @@ namespace YG
         #region LanguagesEnumeration
         [System.Serializable]
         public class Languages
-        { 
+        {
             [Tooltip("RUSSIAN")] public bool ru;
             [Tooltip("ENGLISH")] public bool en;
             [Tooltip("TURKISH")] public bool tr;
@@ -105,6 +105,42 @@ namespace YG
         [System.Serializable]
         public class Fonts
         {
+
+            public Font[] GetFontsByLanguageName(string lang)
+            {
+                switch (lang)
+                {
+                    case "ru": return ru;
+                    case "en": return en;
+                    case "tr": return tr;
+                    case "az": return az;
+                    case "be": return be;
+                    case "he": return he;
+                    case "hy": return hy;
+                    case "ka": return ka;
+                    case "et": return et;
+                    case "fr": return fr;
+                    case "kk": return kk;
+                    case "ky": return ky;
+                    case "lt": return lt;
+                    case "lv": return lv;
+                    case "ro": return ro;
+                    case "tg": return tg;
+                    case "tk": return tk;
+                    case "uk": return uk;
+                    case "uz": return uz;
+                    case "es": return es;
+                    case "pt": return pt;
+                    case "ar": return ar;
+                    case "id": return id;
+                    case "ja": return ja;
+                    case "it": return it;
+                    case "de": return de;
+                    case "hi": return hi;
+                }
+                return null;
+            }
+
             [Tooltip("Стандартный шрифт")] public Font[] defaultFont;
             [Tooltip("RUSSIAN")] public Font[] ru;
             [Tooltip("ENGLISH")] public Font[] en;

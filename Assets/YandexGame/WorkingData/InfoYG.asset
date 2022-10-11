@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: InfoYG
   m_EditorClassIdentifier: 
   scopes: 1
-  playerPhotoSize: 0
+  playerPhotoSize: 2
   leaderboardEnable: 1
   siteLock: 1
   checkAdblock: 1
   fullscreenAdChallenge: 0
   staticRBTInGame: 0
   LocalizationEnable: 1
-  callingLanguageCheck: 0
+  callingLanguageCheck: 1
   translateMethod: 2
   CSVFileTranslate:
     format: 0
@@ -54,15 +54,19 @@ MonoBehaviour:
     de: 1
     hi: 1
   fonts:
-    defaultFont: []
+    defaultFont:
+    - {fileID: 12800000, guid: 82cc91725ab2f0c41920038a250d768b, type: 3}
     ru: []
     en: []
     tr: []
     az: []
     be: []
-    he: []
-    hy: []
-    ka: []
+    he:
+    - {fileID: 12800000, guid: 400b79d2df8f7334c8b9ed216f7c2aac, type: 3}
+    hy:
+    - {fileID: 12800000, guid: 33c2382812cee5143809927b4ea43703, type: 3}
+    ka:
+    - {fileID: 12800000, guid: 33c2382812cee5143809927b4ea43703, type: 3}
     et: []
     fr: []
     kk: []
@@ -76,11 +80,14 @@ MonoBehaviour:
     uz: []
     es: []
     pt: []
-    ar: []
+    ar:
+    - {fileID: 12800000, guid: 47ad58f49f19ecb4cb9d9d294722fb78, type: 3}
     id: []
-    ja: []
+    ja:
+    - {fileID: 12800000, guid: 5c6350bca32e97e41be02ecad8aa2b65, type: 3}
     it: []
     de: []
-    hi: []
+    hi:
+    - {fileID: 12800000, guid: ad420aa90c4a66d439fd445aa8123c8e, type: 3}
   SDKStartDelay: 0
-  debug: 1
+  debug: 0

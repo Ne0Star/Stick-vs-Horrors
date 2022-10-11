@@ -1,87 +1,116 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
+using YG;
+using static YG.SavesYG;
 
 public class Shop : MonoBehaviour
 {
-    [SerializeField] private Button byuButton;
-    [SerializeField] private Text previewName, previewDescription, previewCost;
-    [SerializeField] private Image previewImage;
-    [SerializeField] private ShopItem previewItem;
-    [SerializeField] private Transform itemView;
+
+    public ShopManager shopManager;
+
+    public ItemCategory category;
+    [SerializeField] private PreviewItem preview;
     [SerializeField] private Transform itemsParent;
-    [SerializeField] private UIShopItem[] uiItems;
+    [SerializeField] private List<UIShopItem> uiItems;
+    [SerializeField] private UIShopItem itemPrefab;
 
-    private void Awake()
+    private void Start()
     {
-        uiItems = itemsParent.GetComponentsInChildren<UIShopItem>();
-        byuButton.onClick?.AddListener(() =>
+        if (!itemPrefab) return;
+        shopManager = FindObjectOfType<ShopManager>();
+        List<ShopItem> items = new List<ShopItem>();
+        foreach (ShopItem item in shopManager.initialShopItems)
         {
-
-            GameManager.Instance.ByuItem(previewItem);
-
+            if (item.category == category)
+            {
+                CreateItem(item);
+            }
+        }
+        GameManager.Instance.onByu.AddListener(SetShop);
+        SetShop();
+        //uiItems = itemsParent.GetComponentsInChildren<UIShopItem>();
+    }
+    private void CreateItem(ShopItem item)
+    {
+        UIShopItem i = Instantiate<UIShopItem>(itemPrefab, itemsParent);
+        i.OnClick?.AddListener((i) =>
+        {
+            SetPreviewItem(item);
         });
+        i.SetItem(item);
+        i.gameObject.SetActive(false);
+        uiItems.Add(i);
+    }
+
+    public void SetShop()
+    {
+        Debug.Log("сет схоп");
         foreach (UIShopItem item in uiItems)
         {
-            item.OnClick?.AddListener((i) =>
+            item.gameObject.SetActive(false);
+            item.SetItem(item.ShopItem);
+            if (YandexGame.savesData.items != null)
             {
-                SetPreviewItem(i.ShopItem);
-            });
-        }
+                bool contains = false;
+                foreach (InventoryData id in YandexGame.savesData.items)
+                {
+                    if (id.id == item.ShopItem.id)
+                    {
+                        contains = true;
+                        break;
+                    }
+                }
+                // Если предмет уже куплен
+                if(contains)
+                {
+                    if(item.ShopItem.countType == ItemType.Множественный)
+                    {
+                        item.gameObject.SetActive(true);
+                    }
 
+
+                } else
+                {
+                    item.gameObject.SetActive(true);
+                }
+            }
+            else
+            {
+                item.gameObject.SetActive(true);
+            }
+            //item.gameObject.SetActive(true);
+        }
+    }
+
+    private void RemoveShop()
+    {
+        foreach (UIShopItem item in uiItems)
+        {
+            item.gameObject.SetActive(false);
+        }
     }
 
     private void OnEnable()
     {
         RemovePreviewItem();
+        SetShop();
     }
 
     private void OnDisable()
     {
         RemovePreviewItem();
+        RemoveShop();
     }
 
     public void SetPreviewItem(ShopItem item)
     {
-        previewItem = item;
-        previewCost.text = item.cost + "";
-        previewImage.sprite = item.image;
-        previewName.text = GameManager.Instance.GetValueByKey(item.nameKey);
-        previewDescription.text = GameManager.Instance.GetValueByKey(item.discriptionKey);
-        itemView.gameObject.SetActive(true);
+        preview.SetPreviewItem(item);
     }
 
     private void RemovePreviewItem()
     {
-        previewItem = null;
-        previewCost.text = "";
-        previewImage.sprite = null;
-        previewName.text = "";
-        previewDescription.text = "";
-        itemView.gameObject.SetActive(false);
+        preview.RemovePreviewItem();
     }
-
-    private bool setGizmozItem = false;
-
-    private void OnDrawGizmos()
-    {
-        if (setGizmozItem)
-        {
-            if (previewItem)
-            {
-                SetPreviewItem(previewItem);
-            }
-            else
-            {
-                previewCost.text = "";
-                previewImage.sprite = null;
-                previewName.text = "";
-                previewDescription.text = "";
-            }
-            setGizmozItem = false;
-        }
-
-    }
-
 }
